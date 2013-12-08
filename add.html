@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jQuery Mobile Note</title>
+<link rel="stylesheet"  href="jqm/jquery.mobile-1.3.2.min.css">
+<link rel="stylesheet" href="css/jqmNote.css">
+<script src="jqm/jquery-1.9.1.min.js"></script>
+<script src="jqm/jquery.mobile-1.3.2.min.js"></script>
+<script src="js/jqmNote.js"></script>
+</head>
+<body>
+<div id="addPage" data-role="page">
+    <div data-role="header" data-position="fixed">
+        <a href="index.html"  data-role="button" data-rel="back">取消</a>
+        <h1 id="hdName">新建笔记</h1>
+        <a id="saveTxt" href="#" data-role="button" data-theme="b"  data-icon="save">保存</a>
+    </div>
+    <div data-role="content">
+        <textarea  name="textarea" id="noteTextarea"></textarea>
+    </div>
+</div>
+</body>
+</html>

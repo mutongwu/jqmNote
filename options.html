@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jQuery Mobile Note</title>
+<link rel="stylesheet"  href="jqm/jquery.mobile-1.3.2.min.css">
+<link rel="stylesheet" href="css/jqmNote.css">
+<script src="jqm/jquery-1.9.1.min.js"></script>
+<script src="jqm/jquery.mobile-1.3.2.min.js"></script>
+<script src="js/jqmNote.js"></script>
+</head>
+<body>
+<div id="optionsPage" data-role="page">
+    <div data-role="header">
+        <a href="index.html" data-role="button" data-transition="fade" data-theme="" data-icon="back">取消</a>
+        <h1>选项设置</h1>
+        <a href="#about" data-transition="flip" data-rel="popup" data-role="button" data-position-to="window" data-theme="b"  data-icon="info">关于</a>
+    </div>
+    <div data-role="content">
+        <form id="pwdForm" action="index.html">
+            <legend>密码设置：</legend>
+            <input type="password" name="pass0" id="pw0" value="" placeholder="请输入旧密码" data-theme="a">
+            <input type="password" name="pass1" id="pw1" value="" placeholder="请输入新密码" data-theme="a">
+            <input type="password" name="pass2" id="pw2" value="" placeholder="请重复新密码" data-theme="a">
+            <button type="submit" data-theme="b" data-icon="check">确定</button>
+        </form>
+        <div class="ui-bar ui-bar-c">  
+            <h3>提示：密码可以为空，表示不启用密码功能。默认密码为空。</h3>
+        </div>
+        <div data-role="popup" id="about" data-theme="d" data-overlay-theme="b" class="ui-corner-all" >
+            <h3>闪刻V0.1——记录闪光的时刻 </h3>
+            <p>用于试验的简单笔记软件，基于jquery mobile1.3.2完成。</p>
+            <p>作者：牧童</p>
+            <p>Email:<a href="mailto:wushufeng@foxmail.com">wushufeng@foxmail.com</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
