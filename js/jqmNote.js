@@ -6,7 +6,32 @@ var globalUtil = {
         }else{
             return '';
         }
-    }
+    },
+    applyTpl : (function(){
+        var reg = new RegExp("\\{.+?\\}","g");
+        var replaceFn = function(data,key,tpl){
+            var value = data,words = key.split(".");
+            for(var i=0;i<words.length;i++){
+                if(typeof value[words[i]] !== 'undefined'){
+                    value = value[words[i]];
+                }else{
+                    value = '';
+                    break;
+                }
+            }
+            return tpl.replace(new RegExp("\\{" + key+"\\}"),value);
+        };
+        return function(tpl,data){
+            if(typeof data == 'undefined'){
+                data = '';
+            }
+            var rs2 = tpl.match(reg);
+            for(var i=0;i<rs2.length;i++){
+                 tpl = replaceFn(data,rs2[i].substring(1,rs2[i].length-1),tpl);     
+            }
+            return tpl || '';
+        };
+    })()
 };
 var jqmNote = {
     options:{
