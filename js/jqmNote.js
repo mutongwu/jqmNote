@@ -211,9 +211,17 @@ jqmNote.MainPage = {
         });
     }    
 };
-
-
+function initApp(){
+    $(document).on('pageinit','[data-role="page"]',function(e){
+        jqmNote.init(e.target.id);
+    });
+}
+if('deviceready' in document){
+    document.addEventListener('deviceready', function(){
+        initApp();
+    }, false);
+}else{
+    initApp();
+}
  
-$(document).on('pageinit','[data-role="page"]',function(e){
-    jqmNote.init(e.target.id);
-});
+
