@@ -1,6 +1,7 @@
 var globalUtil = {
     getParam: function(str){
-        var search = document.location.search;
+        var docurl = $.mobile.getDocumentUrl();
+        var search = $.mobile.path.parseUrl(docurl).search;
         if(new RegExp(str+'=([^&]+)').test(search)){
             return RegExp.$1;
         }else{
@@ -191,7 +192,7 @@ jqmNote.MainPage = {
         this.loadNotes();
     },
     loadNotes: function(){
-        var html = ['<li><a href="add.html?id=f201309091231">',
+        var html = ['<li><a href="add.html?id=f201309091231"  data-ajax="false">',
                     '<h4>4这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字4</h4>',
                     '<p class="noteDate">2013/12/05 16:24</p>',
                 '</a>',
@@ -211,17 +212,28 @@ jqmNote.MainPage = {
         });
     }    
 };
+
+
+ 
 function initApp(){
+    $.mobile.defaultPageTransition = 'none';
     $(document).on('pageinit','[data-role="page"]',function(e){
         jqmNote.init(e.target.id);
+
     });
 }
 if('deviceready' in document){
+    
     document.addEventListener('deviceready', function(){
         initApp();
+        function onDeviceReady() {
+            // Register the event listener
+            document.addEventListener("backbutton", onBackKeyDown, false);
+        }
+        function onBackKeyDown() {
+            alert($.mobile.activePage.attr('id'));
+        }
     }, false);
 }else{
     initApp();
 }
- 
-
