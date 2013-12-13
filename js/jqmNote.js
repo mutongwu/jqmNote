@@ -1,6 +1,6 @@
 var globalUtil = {
     getParam: function(str){
-        var docurl = $.mobile.getDocumentUrl();
+        var docurl = document.location.href;//$.mobile.getDocumentUrl();
         var search = $.mobile.path.parseUrl(docurl).search;
         if(new RegExp(str+'=([^&]+)').test(search)){
             return RegExp.$1;
@@ -8,6 +8,24 @@ var globalUtil = {
             return '';
         }
     },
+    formatDate:function(dt,format){
+        if(!dt){
+            return '';
+        }
+        if(!format){
+            format = 'Y/MM/DD hh:ss';
+        }
+        if(!isNaN(dt)){
+            dt = new Date(dt);
+        }
+        var tmp = 0;
+        return format.replace(/Y/,dt.getFullYear())
+                .relace(/MM/,tmp=dt.getMonth() > 9 ? tmp: '0' + tmp)
+                .relace(/DD/,tmp=dt.getDate() > 9 ? tmp: '0' + tmp)
+                .relace(/hh/,tmp=dt.getMinutes() > 9 ? tmp: '0' + tmp)
+                .relace(/hh/,tmp=dt.getSeconds() > 9 ? tmp: '0' + tmp);
+    },
+    
     applyTpl : (function(){
         var reg = new RegExp("\\{.+?\\}","g");
         var replaceFn = function(data,key,tpl){
@@ -59,7 +77,7 @@ jqmNote.distpach = function(){
 };
 
 jqmNote.init = function(pageId){
-    
+    console.log('pageId: ' + pageId);
     switch(pageId){
         case 'loginPage':{
             jqmNote.LoginPage.init();break;
@@ -74,7 +92,7 @@ jqmNote.init = function(pageId){
             jqmNote.OptionsPage.init();break;
         }
         default:{
-            jqmNote.distpach();
+           // jqmNote.distpach();
             break;
         }
     }        
@@ -114,6 +132,8 @@ jqmNote.LoginPage = {
 
 jqmNote.AddPage = {
     domEl:null,
+    dirty: false,
+    
     init: function(){
         this.domEl = $('#addPage');
         this.bindEvent();
@@ -124,12 +144,19 @@ jqmNote.AddPage = {
         if(fid){
             $('h1').html('编辑笔记');
         }
+        this.fid = fid;
     },
     saveTxt: function(txt){
         if(txt){
-            
+            console.log('this.fid:' + this.fid);
+            jqmNote.MainPage.updateItem(this.fid,{
+                txt: txt.substring(0,40),
+                editTime: globalUtil.formatDate(new Date())
+            });
+            this.dirty = false;
         }
-        $.mobile.changePage('main.html');
+        //$.mobile.changePage('main.html');
+        $('a:jqmData(rel="back")').click();
     },
     
     bindEvent: function(){
@@ -140,7 +167,15 @@ jqmNote.AddPage = {
             _this.saveTxt(txt);
         }).on('pagebeforeshow',function(){
             _this.loadTxt();
+        }).one('change','#noteTextarea',function(){
+            _this.dirty = true;
+        }).on('click',':jqmData(rel="back")',function(e){
+            if(_this.dirty){
+                alert('dirty');
+                return false;
+            }
         });
+        
     }    
 };
 
@@ -191,8 +226,16 @@ jqmNote.MainPage = {
         }
         this.loadNotes();
     },
+    updateItem: function(fid,data){
+        var item = this.domEl.find('li:jqmData(id="' + fid + '")');
+        if(item.size()){
+            item.find('h4').html(data.txt);
+            item.find('.noteDate').html(data.editTime);
+            this.domEl.listview('refresh');
+        }
+    },
     loadNotes: function(){
-        var html = ['<li><a href="add.html?id=f201309091231"  data-ajax="false">',
+        var html = ['<li data-id="f201309091234"><a href="add.html?id=f201309091234">',
                     '<h4>4这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字这里是一大段的文字4</h4>',
                     '<p class="noteDate">2013/12/05 16:24</p>',
                 '</a>',
