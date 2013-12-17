@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+<title>jQuery Mobile Note</title>
+<link rel="stylesheet"  href="jqm/jquery.mobile-1.3.2.min.css" />
+<link rel="stylesheet" href="css/jqmNote.css" />
+<script>
+    if(!!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)){
+        document.write('<script src="cordova.js"></'+'script>');
+    }
+</script>
+<script src="jqm/jquery-1.9.1.min.js"></script>
+<script src="jqm/jquery.mobile-1.3.2.min.js"></script>
+<script src="js/jqmNote.js"></script>
+</head>
+<body>
+<div id="mainPage" data-role="page">
+    <div data-role="header" data-position="fixed">
+         <a href="options.html" data-role="button" data-icon="gear">设置</a>
+         <h1>牧童的笔记</h1>
+         <a href="add.html" data-theme="b" data-role="button" data-icon="plus">新建</a>
+    </div>
+    <div data-role="content">
+       <ul id="noteList" data-role="listview" data-split-icon="delete" data-split-theme="d"></ul>
+    </div>
+</div>
+</body>
+</html>
